@@ -4,13 +4,13 @@
    PRECIOS: PRECIO_MAYORISTA = precio por mayor de cada modelo (COP).
      Hombre: catálogo "CABALLERO MAYOR".  Mujer: catálogo "DAMA MAYOR 21 SEPTIEMBRE 2026".
    La página calcula sola:
-     precio de venta  = mayorista + 45%   (redondeado hacia arriba a $1.000)
+     precio de venta  = mayorista + 55%   (redondeado hacia arriba a $1.000)
      precio "antes"   = precio de venta ÷ 0,80  → se muestra tachado con -20%
    Si un color cuesta distinto, usa la clave "modelo/color", ej: "calamar/rojo".
    Mientras un modelo esté en null se muestra "Precio a consultar".
    ===================================================================== */
 
-const CD_MARGEN = 0.45;   // 45% sobre el precio mayorista
+const CD_MARGEN = 0.55;   // 55% sobre el precio mayorista
 const CD_REBAJA = 0.20;   // rebaja simulada del 20%
 
 const PRECIO_MAYORISTA = {
@@ -7749,8 +7749,8 @@ const CD_PRODUCTS = [
         ]
       },
       {
-        "color": "Negro",
-        "hex": "#1b1b1b",
+        "color": "Rosa menta",
+        "hex": "#e9b7b0",
         "tallas": [
           34,
           35,

@@ -13,6 +13,9 @@ const state = { genero: 'todos', cat: 'todas', talla: null, orden: 'destacados',
 const PCT = Math.round(CD_REBAJA * 100);
 const PAGINA = 24;
 
+// Modelos de la selección premium en la portada (id, índice del color)
+const CD_PREMIUM = [['d-maryury', 0], ['juance', 0], ['d-anahi', 2], ['cristiano', 1], ['d-ciaga', 1], ['delta', 1], ['d-pai-de-durazno', 0], ['d-quintanilla', 0]];
+
 // Foto de portada de cada categoría: [id del modelo, índice del color]
 const CD_PORTADAS = {
   'mujer-plataforma': ['d-bloom', 0], 'mujer-deportivos': ['d-nova', 0], 'mujer-retro': ['d-quintero', 0],
@@ -71,8 +74,8 @@ function filtrados() {
   return list;
 }
 
-function cardHTML(p) {
-  const v = (state.talla && p.variantes.find(x => x.tallas.includes(state.talla))) || p.variantes[0];
+function cardHTML(p, vi) {
+  const v = vi != null ? p.variantes[vi] : (state.talla && p.variantes.find(x => x.tallas.includes(state.talla))) || p.variantes[0];
   const pr = precioDesde(p);
   const alt = v.fotos[1] || (p.variantes[1] && p.variantes[1].fotos[0]);
   const n = p.variantes.length;
@@ -99,7 +102,7 @@ function cardHTML(p) {
 function render() {
   const list = filtrados();
   const shown = list.slice(0, state.visibles);
-  $('#grid').innerHTML = shown.map(cardHTML).join('');
+  $('#grid').innerHTML = shown.map(p => cardHTML(p)).join('');
   const rest = list.length - shown.length;
   $('#moreBtn').hidden = rest <= 0;
   $('#moreBtn').textContent = `Ver más modelos (${rest})`;
@@ -278,6 +281,11 @@ document.addEventListener('DOMContentLoaded', () => {
   $('#footerWa').href = saludo;
 
   buildCats();
+  $('#premiumRow').innerHTML = CD_PREMIUM.map(([id, vi]) => {
+    const p = CD_PRODUCTS.find(x => x.id === id);
+    return p ? cardHTML(p, vi) : '';
+  }).join('');
+  $('#premiumRow').addEventListener('click', e => { const c = e.target.closest('.card'); if (c) openModal(c.dataset.id, +c.dataset.color); });
   paintFilters();
   render();
   paintBag();

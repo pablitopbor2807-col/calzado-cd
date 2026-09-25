@@ -54,25 +54,34 @@ a { color: inherit; }
 .bag-count { position: absolute; top: 0; right: -2px; min-width: 18px; height: 18px; border-radius: 9px; background: var(--gold); color: var(--ink); font-size: 10px; font-weight: 700; display: grid; place-items: center; padding: 0 4px; }
 
 /* Hero */
-.hero { background: linear-gradient(115deg, var(--stone) 0 62%, #e4ded6 62%); overflow: hidden; }
-.hero-in { display: grid; gap: 36px; padding-top: 44px; padding-bottom: 52px; }
-.hero h1 { font-family: var(--head); text-transform: uppercase; font-weight: 700; font-size: clamp(52px, 11vw, 96px); line-height: .92; margin: 0 0 18px; color: var(--ink); }
+.hero { background: var(--stone); padding: 34px 0 40px; }
+.hero-head { display: grid; gap: 14px; margin-bottom: 22px; }
+.hero h1 { font-family: var(--head); text-transform: uppercase; font-weight: 700; font-size: clamp(42px, 8vw, 84px); line-height: .92; margin: 0; color: var(--ink); text-wrap: balance; }
 .hero h1 span { color: #8a8784; font-weight: 600; }
-.hero-tag { font-size: 13px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; margin: 0 0 18px; padding-bottom: 18px; border-bottom: 1px solid var(--gold); max-width: 420px; }
-.hero-tag i { color: var(--gold); font-style: normal; margin: 0 6px; }
-.hero-text { color: #3d4450; line-height: 1.65; max-width: 420px; margin: 0 0 26px; font-size: 15px; }
-.hero-cta { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
-.sale-pill { font-family: var(--head); text-transform: uppercase; font-size: 18px; letter-spacing: .04em; color: var(--sale); }
-.sale-pill b { font-size: 28px; }
-.hero-mosaic { display: grid; grid-template-columns: 1.25fr 1fr; grid-template-rows: 1fr 1fr; gap: 10px; aspect-ratio: 1 / 1; width: 100%; max-width: 520px; justify-self: center; }
-.tile { position: relative; padding: 0; border: 0; border-radius: 14px; overflow: hidden; background: var(--stone); cursor: pointer; box-shadow: 0 12px 30px rgba(15, 27, 45, .12); }
-.tile-big { grid-row: 1 / 3; }
-.tile img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s; }
-.tile:hover img { transform: scale(1.04); }
-.tile-cap { position: absolute; left: 8px; bottom: 8px; right: 8px; display: flex; justify-content: space-between; align-items: baseline; gap: 6px; background: rgba(248, 246, 243, .94); color: var(--ink); border-radius: 8px; padding: 7px 10px; font-size: 11px; text-align: left; }
-.tile-cap:empty { display: none; }
-.tile-cap b { font-family: var(--head); font-size: 15px; font-weight: 600; text-transform: uppercase; letter-spacing: .02em; }
-.tile-cap span { font-weight: 700; color: var(--sale); white-space: nowrap; }
+.hero-text { color: #3d4450; line-height: 1.6; margin: 0; font-size: 15px; max-width: 440px; }
+.hero-from { margin: 10px 0 0; font-size: 13px; font-weight: 600; letter-spacing: .04em; display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.sale-pill { font-family: var(--head); text-transform: uppercase; font-size: 16px; letter-spacing: .04em; color: var(--sale); font-weight: 500; }
+.sale-pill b { font-size: 24px; }
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.split-panel { position: relative; display: block; border-radius: 14px; overflow: hidden; aspect-ratio: 3 / 4; background: var(--ink); color: #fff; text-decoration: none; }
+.split-panel img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s ease; }
+.split-panel:hover img { transform: scale(1.04); }
+.split-panel::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(10, 17, 29, .88) 0%, rgba(10, 17, 29, .25) 45%, rgba(10, 17, 29, 0) 70%); }
+.split-info { position: absolute; left: 14px; right: 14px; bottom: 14px; z-index: 1; display: grid; gap: 2px; }
+.split-info small { font-size: 10px; font-weight: 700; letter-spacing: .24em; text-transform: uppercase; color: var(--gold-2); }
+.split-info b { font-family: var(--head); font-size: clamp(40px, 9vw, 96px); font-weight: 600; text-transform: uppercase; line-height: .95; }
+.split-sub { font-size: 12px; opacity: .85; display: none; }
+.split-cta { margin-top: 8px; font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; display: inline-flex; gap: 8px; align-items: center; }
+.split-cta i { font-style: normal; transition: transform .25s; }
+.split-panel:hover .split-cta i { transform: translateX(4px); }
+
+/* Selección premium */
+.premium { padding: 56px 0 8px; }
+.premium-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 20px; }
+.premium-note { margin: 0; color: var(--muted); font-size: 13px; max-width: 320px; }
+.premium-row { display: grid; grid-auto-flow: column; grid-auto-columns: 62%; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding-bottom: 6px; }
+.premium-row::-webkit-scrollbar { display: none; }
+.premium-row .card { scroll-snap-align: start; }
 
 /* Beneficios */
 .perks { background: #fff; border-bottom: 1px solid var(--line); }
@@ -282,18 +291,26 @@ a { color: inherit; }
   #catsHombre .cat-card { aspect-ratio: 3 / 2; }
   #catsMujer { grid-template-columns: repeat(5, minmax(0, 1fr)); }
   .imported-in { grid-template-columns: 1.1fr 1fr; }
+  .hero { padding: 48px 0 56px; }
+  .hero-head { grid-template-columns: 1.3fr 1fr; align-items: end; gap: 40px; margin-bottom: 30px; }
+  .split { gap: 16px; }
+  .split-panel { aspect-ratio: 4 / 5; }
+  .split-info { left: 28px; right: 28px; bottom: 26px; }
+  .split-sub { display: block; font-size: 14px; }
+  .split-cta { font-size: 12px; }
+  .premium-row { grid-auto-flow: row; grid-template-columns: repeat(4, minmax(0, 1fr)); overflow: visible; gap: 34px 20px; }
   .imported-copy { padding: 44px; }
   .modal-card { inset: 50% auto auto 50%; transform: translate(-50%, -50%); width: min(980px, 94vw); max-height: 90vh; border-radius: 18px; grid-template-columns: 1.1fr 1fr; animation: none; }
   .m-gallery { padding: 20px 0 20px 20px; }
   .m-info { padding: 44px 32px 32px; }
 }
 @media (min-width: 960px) {
+  .split-panel { aspect-ratio: 16 / 13; }
   #catsMujer { grid-template-columns: repeat(5, minmax(0, 1fr)); }
   .filters { position: sticky; top: 66px; z-index: 20; }
   .filters .search { max-width: 420px; }
   .nav { display: flex; }
   .brand img { height: 48px; }
-  .hero-in { grid-template-columns: 1.1fr 1fr; align-items: center; padding-top: 70px; padding-bottom: 80px; }
 
   .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }

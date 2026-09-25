@@ -44,22 +44,36 @@
 
 <main>
   <section class="hero">
-    <div class="wrap hero-in">
-      <div class="hero-copy">
-        <p class="eyebrow">Catálogo 2026</p>
-        <h1>Tenis<br><span>para ella<br>y para él</span></h1>
-        <p class="hero-tag">Estilo <i>•</i> Comodidad <i>•</i> Duración</p>
-        <p class="hero-text">Más de 200 modelos cómodos y resistentes para el día a día. Mujer de la talla 34 a la 40 y hombre de la 37 a la 44.</p>
-        <div class="hero-cta">
-          <a href="#mujer" class="btn btn-dark" data-go="mujer">Ver mujer</a>
-          <a href="#hombre" class="btn btn-outline" data-go="hombre">Ver hombre</a>
+    <div class="wrap">
+      <div class="hero-head">
+        <div>
+          <p class="eyebrow">Catálogo 2026</p>
+          <h1>Tenis para ella <span>y para él</span></h1>
         </div>
-        <p class="hero-from" id="heroFrom"></p>
+        <div class="hero-side">
+          <p class="hero-text">Más de 200 modelos cómodos y resistentes. Mujer de la talla 34 a la 40 y hombre de la 37 a la 44.</p>
+          <p class="hero-from"><span class="sale-pill">Hasta <b>−20%</b></span> <span id="heroFrom"></span></p>
+        </div>
       </div>
-      <div class="hero-mosaic">
-        <button class="tile tile-big" data-open="d-quintero"><img src="assets/img/dama/d-quintero-cafe-0.jpg" alt="Tenis Quintero café para mujer"><span class="tile-cap" data-cap="d-quintero"></span></button>
-        <button class="tile" data-open="ondred"><img src="assets/img/productos/ondred-cafe-201.jpg" alt="Tenis Ondred café para hombre"><span class="tile-cap" data-cap="ondred"></span></button>
-        <button class="tile" data-open="d-nova" data-color-name="Crema Blue"><img src="assets/img/dama/d-nova-crema-blue-0.jpg" alt="Tenis Nova para mujer"><span class="tile-cap" data-cap="d-nova"></span></button>
+      <div class="split">
+        <a class="split-panel" href="#mujer" data-go="mujer">
+          <img src="assets/img/dama/d-quintanilla-miel-0.jpg" alt="Tenis importado Quintanilla miel para mujer">
+          <span class="split-info">
+            <small>Mujer</small>
+            <b>Ella</b>
+            <span class="split-sub">Importados, plataformas y retro</span>
+            <span class="split-cta">Ver colección de mujer <i aria-hidden="true">→</i></span>
+          </span>
+        </a>
+        <a class="split-panel" href="#hombre" data-go="hombre">
+          <img src="assets/img/productos/ondred-cafe-201.jpg" alt="Tenis Ondred café para hombre">
+          <span class="split-info">
+            <small>Hombre</small>
+            <b>Él</b>
+            <span class="split-sub">Casual, deportivos e importados</span>
+            <span class="split-cta">Ver colección de hombre <i aria-hidden="true">→</i></span>
+          </span>
+        </a>
       </div>
     </div>
   </section>
@@ -70,6 +84,19 @@
       <div class="perk"><svg viewBox="0 0 24 24"><path d="M4 9c3-2 5 2 8 0s5-2 8 0M4 14c3-2 5 2 8 0s5-2 8 0"/></svg><div><b>Comodidad</b><span>Para usar todo el día</span></div></div>
       <div class="perk"><svg viewBox="0 0 24 24"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg><div><b>Envío gratis</b><span>En compras desde $200.000</span></div></div>
       <div class="perk"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="8" rx="1"/><path d="M7 8v3M11 8v4M15 8v3M19 8v4"/></svg><div><b>Tallas 34 a 44</b><span>Con guía de tallas</span></div></div>
+    </div>
+  </section>
+
+  <section class="premium" id="premium">
+    <div class="wrap">
+      <div class="premium-head">
+        <div>
+          <p class="eyebrow">Selección premium</p>
+          <h2 class="section-title">Lo mejor de la colección</h2>
+        </div>
+        <p class="premium-note">Importados y ediciones especiales para ella y para él.</p>
+      </div>
+      <div class="premium-row" id="premiumRow"></div>
     </div>
   </section>
 
