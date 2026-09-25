@@ -9,8 +9,16 @@ const CD_ENVIO_GRATIS = 200000;
 const CD_PAGOS = 'Bancolombia o Nequi';
 
 const $ = (s, el = document) => el.querySelector(s);
-const state = { linea: 'todos', talla: null, orden: 'destacados', q: '' };
+const state = { genero: 'todos', cat: 'todas', talla: null, orden: 'destacados', q: '', visibles: 24 };
 const PCT = Math.round(CD_REBAJA * 100);
+const PAGINA = 24;
+
+// Foto de portada de cada categoría: [id del modelo, índice del color]
+const CD_PORTADAS = {
+  'mujer-plataforma': ['d-bloom', 0], 'mujer-deportivos': ['d-nova', 0], 'mujer-retro': ['d-quintero', 0],
+  'mujer-sandalias': ['d-comfy', 0], 'mujer-importados': ['d-maryury', 0],
+  'hombre-casual': ['smood', 1], 'hombre-deportivos': ['calamar', 1], 'hombre-importados': ['juance', 0]
+};
 
 function waLink(texto) {
   const base = CD_WHATSAPP ? 'https://wa.me/' + CD_WHATSAPP : 'https://wa.me/';
@@ -27,20 +35,34 @@ function precioDesde(p) {
 
 function priceHTML(pr, { desde = false, off = false } = {}) {
   if (!pr) return '<span class="ask">Precio a consultar</span>';
-  return (desde ? '<span class="was" style="text-decoration:none">Desde</span>' : '') +
+  return (desde ? '<span class="from">Desde</span>' : '') +
     `<span class="now">${cdFormato(pr.venta)}</span><span class="was">${cdFormato(pr.antes)}</span>` +
     (off ? `<span class="off">−${PCT}%</span>` : '');
 }
 
+function catNombre(genero, cat) {
+  const c = (CD_CATEGORIAS[genero] || []).find(x => x.id === cat);
+  return c ? c.nombre : '';
+}
+
 /* ---------- Catálogo ---------- */
 function filtrados() {
-  let list = CD_PRODUCTS.filter(p => state.linea === 'todos' || p.linea === state.linea);
+  let list = CD_PRODUCTS.filter(p => state.genero === 'todos' || p.genero === state.genero);
+  if (state.genero !== 'todos' && state.cat !== 'todas') list = list.filter(p => p.categoria === state.cat);
   if (state.q) {
     const q = cdSlug(state.q);
-    list = list.filter(p => cdSlug(p.nombre + ' ' + p.variantes.map(v => v.color).join(' ')).includes(q));
+    list = list.filter(p => cdSlug(p.nombre + ' ' + p.variantes.map(v => v.color).join(' ') + ' ' + p.genero + ' ' + catNombre(p.genero, p.categoria)).includes(q));
   }
   if (state.talla) list = list.filter(p => p.variantes.some(v => v.tallas.includes(state.talla)));
   const pv = p => (precioDesde(p) || {}).venta;
+  if (state.orden === 'destacados' && state.genero === 'todos') {
+    // Mezcla mujer y hombre para que se vean ambos desde el inicio
+    const orden = { retro: 0, plataforma: 1, deportivos: 2, importados: 3, sandalias: 4 };
+    const m = list.filter(p => p.genero === 'mujer').sort((a, b) => orden[a.categoria] - orden[b.categoria]);
+    const h = list.filter(p => p.genero === 'hombre'), out = [];
+    while (m.length || h.length) { out.push(...m.splice(0, 2)); if (h.length) out.push(h.shift()); }
+    list = out;
+  }
   if (state.orden === 'nombre') list = [...list].sort((a, b) => a.nombre.localeCompare(b.nombre));
   if (state.orden.startsWith('precio')) {
     const dir = state.orden === 'precio-asc' ? 1 : -1;
@@ -49,55 +71,98 @@ function filtrados() {
   return list;
 }
 
+function cardHTML(p) {
+  const v = (state.talla && p.variantes.find(x => x.tallas.includes(state.talla))) || p.variantes[0];
+  const pr = precioDesde(p);
+  const alt = v.fotos[1] || (p.variantes[1] && p.variantes[1].fotos[0]);
+  const n = p.variantes.length;
+  const t = cdTallas(p);
+  const sw = p.variantes.slice(0, 7).map(x => `<span class="sw" style="background:${x.hex}" title="${x.color}"></span>`).join('') +
+    (n > 7 ? `<span class="sw-more">+${n - 7}</span>` : '');
+  return `<button class="card" data-id="${p.id}" data-color="${p.variantes.indexOf(v)}">
+    <div class="card-media">
+      ${pr ? `<span class="badge">−${PCT}%</span>` : ''}
+      ${p.categoria === 'importados' ? '<span class="tag-imp">Importado</span>' : ''}
+      <img src="${v.fotos[0]}" alt="Tenis ${p.nombre} ${v.color}" loading="lazy">
+      ${alt ? `<img class="alt" src="${alt}" alt="" loading="lazy">` : ''}
+    </div>
+    <div class="card-body">
+      <p class="card-kicker">${CD_GENEROS[p.genero]} · ${catNombre(p.genero, p.categoria)}</p>
+      <h3 class="card-name">${p.nombre}</h3>
+      <p class="card-meta">${n > 1 ? n + ' colores' : v.color} · Tallas ${t[0]}–${t[t.length - 1]}</p>
+      <div class="swatches">${sw}</div>
+      <div class="price">${priceHTML(pr, { desde: pr && pr.varia })}</div>
+    </div>
+  </button>`;
+}
+
 function render() {
   const list = filtrados();
-  const grid = $('#grid');
-  grid.innerHTML = list.map(p => {
-    const v = (state.talla && p.variantes.find(x => x.tallas.includes(state.talla))) || p.variantes[0];
-    const pr = precioDesde(p);
-    const alt = v.fotos[1] || (p.variantes[1] && p.variantes[1].fotos[0]);
-    const n = p.variantes.length;
-    const t = cdTallas(p);
-    return `<button class="card" data-id="${p.id}" data-color="${p.variantes.indexOf(v)}">
-      <div class="card-media">
-        ${pr ? `<span class="badge">−${PCT}%</span>` : ''}
-        ${p.linea === 'importados' ? '<span class="tag-imp">Importado</span>' : ''}
-        <img src="${v.fotos[0]}" alt="Tenis ${p.nombre} ${v.color}" loading="lazy">
-        ${alt ? `<img class="alt" src="${alt}" alt="" loading="lazy">` : ''}
-      </div>
-      <div class="card-body">
-        <h3 class="card-name">${p.nombre}</h3>
-        <p class="card-meta">${n > 1 ? n + ' colores' : v.color} · Tallas ${t[0]}–${t[t.length - 1]}</p>
-        <div class="swatches">${p.variantes.map(x => `<span class="sw" style="background:${x.hex}" title="${x.color}"></span>`).join('')}</div>
-        <div class="price">${priceHTML(pr, { desde: pr && pr.varia })}</div>
-      </div>
-    </button>`;
-  }).join('');
+  const shown = list.slice(0, state.visibles);
+  $('#grid').innerHTML = shown.map(cardHTML).join('');
+  const rest = list.length - shown.length;
+  $('#moreBtn').hidden = rest <= 0;
+  $('#moreBtn').textContent = `Ver más modelos (${rest})`;
   $('#empty').textContent = state.q
     ? `No encontramos "${state.q}". Prueba con otro nombre o escríbenos por WhatsApp.`
     : 'No hay modelos disponibles en esa talla. Escríbenos y te ayudamos a encontrar uno.';
   $('#empty').hidden = list.length > 0;
   $('#resultCount').textContent = list.length + (list.length === 1 ? ' modelo' : ' modelos');
+  $('#catTitle').textContent = state.genero === 'todos' ? 'Nuestro catálogo'
+    : state.cat === 'todas' ? `Tenis para ${state.genero}` : `${CD_GENEROS[state.genero]} · ${catNombre(state.genero, state.cat)}`;
 }
 
-function setLinea(linea) {
-  state.linea = linea;
-  document.querySelectorAll('#lineTabs .tab').forEach(b => b.classList.toggle('is-active', b.dataset.linea === linea));
-  render();
-}
-
-function buildSizeFilter() {
-  const all = [...new Set(CD_PRODUCTS.flatMap(cdTallas))].filter(t => t >= 37).sort((a, b) => a - b);
+function paintFilters() {
+  document.querySelectorAll('#genderTabs .g-btn').forEach(b => b.classList.toggle('is-active', b.dataset.genero === state.genero));
+  const tabs = $('#catTabs');
+  if (state.genero === 'todos') { tabs.hidden = true; tabs.innerHTML = ''; }
+  else {
+    const cats = CD_CATEGORIAS[state.genero];
+    const count = c => CD_PRODUCTS.filter(p => p.genero === state.genero && (c === 'todas' || p.categoria === c)).length;
+    tabs.hidden = false;
+    tabs.innerHTML = [{ id: 'todas', nombre: 'Todas' }, ...cats].map(c =>
+      `<button class="tab ${state.cat === c.id ? 'is-active' : ''}" data-cat="${c.id}">${c.nombre} <small>${count(c.id)}</small></button>`).join('');
+  }
+  // Tallas según el género
+  const base = state.genero === 'todos' ? CD_PRODUCTS : CD_PRODUCTS.filter(p => p.genero === state.genero);
+  const all = [...new Set(base.flatMap(cdTallas))].filter(t => t >= 34 && t <= 44).sort((a, b) => a - b);
+  if (state.talla && !all.includes(state.talla)) state.talla = null;
   $('#sizeFilter').innerHTML = '<span class="size-chip label">Talla</span>' +
-    all.map(t => `<button class="size-chip" data-talla="${t}">${t}</button>`).join('');
-  $('#sizeFilter').addEventListener('click', e => {
-    const b = e.target.closest('[data-talla]');
-    if (!b) return;
-    const t = +b.dataset.talla;
-    state.talla = state.talla === t ? null : t;
-    document.querySelectorAll('.size-chip[data-talla]').forEach(x => x.classList.toggle('is-active', +x.dataset.talla === state.talla));
-    render();
+    all.map(t => `<button class="size-chip ${t === state.talla ? 'is-active' : ''}" data-talla="${t}">${t}</button>`).join('');
+}
+
+/* Cambia género/categoría, repinta y (opcional) baja al catálogo */
+function setFiltro(genero, cat = 'todas', scroll = false) {
+  state.genero = genero; state.cat = cat; state.visibles = PAGINA;
+  paintFilters(); render();
+  if (scroll) $('#catalogo').scrollIntoView({ behavior: 'smooth' });
+}
+
+function buildCats() {
+  ['mujer', 'hombre'].forEach(g => {
+    const el = $(g === 'mujer' ? '#catsMujer' : '#catsHombre');
+    el.innerHTML = CD_CATEGORIAS[g].map(c => {
+      const ps = CD_PRODUCTS.filter(p => p.genero === g && p.categoria === c.id);
+      if (!ps.length) return '';
+      const [pid, vi] = CD_PORTADAS[g + '-' + c.id] || [ps[0].id, 0];
+      const p = CD_PRODUCTS.find(x => x.id === pid) || ps[0];
+      const foto = (p.variantes[vi] || p.variantes[0]).fotos[0];
+      const ventas = ps.map(precioDesde).filter(Boolean).map(x => x.venta);
+      return `<a class="cat-card" href="#${g}-${c.id}" data-go="${g}" data-cat="${c.id}">
+        <img src="${foto}" alt="${CD_GENEROS[g]} ${c.nombre}" loading="lazy">
+        <span class="cat-info"><b>${c.nombre}</b><small>${ps.length} modelos${ventas.length ? ' · desde ' + cdFormato(Math.min(...ventas)) : ''}</small></span>
+      </a>`;
+    }).join('');
   });
+}
+
+/* Guía de tallas: largo del pie aproximado (27 cm = talla 41, cada talla ≈ 0,67 cm) */
+function guiaHTML(tallas) {
+  const cm = t => (27 + (t - 41) * 2 / 3).toFixed(1).replace('.', ',');
+  const ts = tallas.length ? tallas : [37, 38, 39, 40, 41, 42, 43];
+  return `<table><thead><tr><th>Talla</th>${ts.map(t => `<th>${t}</th>`).join('')}</tr></thead>
+    <tbody><tr><td>Pie (cm)</td>${ts.map(t => `<td>${cm(t)}</td>`).join('')}</tr></tbody></table>
+    <p>Medidas aproximadas del largo del pie. Para medirte: pon el pie sobre una hoja contra la pared, marca la punta del dedo más largo y mide. Si quedas entre dos tallas, pide la más grande. ¿Dudas? Escríbenos y te ayudamos.</p>`;
 }
 
 /* ---------- Ficha de producto ---------- */
@@ -108,7 +173,8 @@ function openModal(id, vi = 0) {
   modal.vi = vi; modal.foto = 0;
   modal.talla = state.talla && modal.p.variantes[vi].tallas.includes(state.talla) ? state.talla : null;
   $('#mTitle').textContent = modal.p.nombre;
-  $('#mLinea').textContent = CD_LINEAS[modal.p.linea];
+  $('#mLinea').textContent = `${CD_GENEROS[modal.p.genero]} · ${catNombre(modal.p.genero, modal.p.categoria)}`;
+  $('#mGuide').hidden = true; $('#mGuideBtn').setAttribute('aria-expanded', 'false');
   paintModal();
   $('#modal').hidden = false;
   document.body.style.overflow = 'hidden';
@@ -131,6 +197,7 @@ function paintModal() {
   $('#mColor').textContent = v.color;
   $('#mSwatches').innerHTML = p.variantes.map((x, i) =>
     `<button class="sw ${i === vi ? 'is-active' : ''}" data-vi="${i}" style="background:${x.hex}" title="${x.color}" aria-label="${x.color}"></button>`).join('');
+  $('#mGuide').innerHTML = guiaHTML(v.tallas);
   $('#mSizes').innerHTML = v.tallas.map(t => `<button data-t="${t}" class="${t === modal.talla ? 'is-active' : ''}">${t}</button>`).join('');
   $('#mHint').textContent = modal.talla ? '' : 'Selecciona tu talla';
   const envio = pr && pr.venta >= CD_ENVIO_GRATIS ? 'Gratis' : cdFormato(CD_ENVIO);
@@ -210,13 +277,31 @@ document.addEventListener('DOMContentLoaded', () => {
   $('#waFloat').href = saludo;
   $('#footerWa').href = saludo;
 
-  buildSizeFilter();
+  buildCats();
+  paintFilters();
   render();
   paintBag();
 
-  $('#lineTabs').addEventListener('click', e => { const b = e.target.closest('[data-linea]'); if (b) setLinea(b.dataset.linea); });
-  document.querySelectorAll('a[data-linea]').forEach(a => a.addEventListener('click', () => setLinea(a.dataset.linea)));
-  $('#sortSelect').addEventListener('change', e => { state.orden = e.target.value; render(); });
+  $('#genderTabs').addEventListener('click', e => { const b = e.target.closest('[data-genero]'); if (b) setFiltro(b.dataset.genero); });
+  $('#catTabs').addEventListener('click', e => { const b = e.target.closest('[data-cat]'); if (b) setFiltro(state.genero, b.dataset.cat); });
+  $('#sizeFilter').addEventListener('click', e => {
+    const b = e.target.closest('[data-talla]'); if (!b) return;
+    const t = +b.dataset.talla;
+    state.talla = state.talla === t ? null : t; state.visibles = PAGINA;
+    paintFilters(); render();
+  });
+  // Enlaces del menú, portada y tarjetas de categoría
+  document.addEventListener('click', e => {
+    const a = e.target.closest('[data-go]'); if (!a) return;
+    e.preventDefault();
+    setFiltro(a.dataset.go, a.dataset.cat || 'todas', true);
+    history.replaceState(null, '', '#' + a.dataset.go + (a.dataset.cat ? '-' + a.dataset.cat : ''));
+  });
+  $('#moreBtn').addEventListener('click', () => { state.visibles += PAGINA; render(); });
+  $('#mGuideBtn').addEventListener('click', () => {
+    const g = $('#mGuide'); g.hidden = !g.hidden; $('#mGuideBtn').setAttribute('aria-expanded', String(!g.hidden));
+  });
+  $('#sortSelect').addEventListener('change', e => { state.orden = e.target.value; state.visibles = PAGINA; render(); });
 
   // Portada: fotos con nombre y precio que abren la ficha
   document.querySelectorAll('[data-cap]').forEach(el => {
@@ -224,7 +309,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const pr = p && precioDesde(p);
     if (p) el.innerHTML = `<b>${p.nombre}</b>${pr ? `<span>${cdFormato(pr.venta)}</span>` : ''}`;
   });
-  document.querySelectorAll('[data-open]').forEach(b => b.addEventListener('click', () => openModal(b.dataset.open, +(b.dataset.color || 0))));
+  document.querySelectorAll('[data-open]').forEach(b => b.addEventListener('click', () => {
+    const p = CD_PRODUCTS.find(x => x.id === b.dataset.open);
+    const vi = b.dataset.colorName ? Math.max(0, p.variantes.findIndex(v => v.color === b.dataset.colorName)) : 0;
+    openModal(b.dataset.open, vi);
+  }));
 
   $('#grid').addEventListener('click', e => {
     const c = e.target.closest('.card');
@@ -259,7 +348,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (rm) { bag.splice(+rm.dataset.rm, 1); saveBag(); paintBag(); }
   });
 
-  $('#search').addEventListener('input', e => { state.q = e.target.value.trim(); render(); });
+  $('#search').addEventListener('input', e => { state.q = e.target.value.trim(); state.visibles = PAGINA; render(); });
 
   $('#mShare').addEventListener('click', async () => {
     const url = location.href.split('#')[0] + '#' + modal.p.id;
@@ -270,15 +359,15 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Portada: precio "desde" calculado con el catálogo
-  const ventas = CD_PRODUCTS.flatMap(p => p.variantes.map(v => cdPrecio(p, v))).filter(Boolean).map(x => x.venta);
+  const ventas = CD_PRODUCTS.filter(p => p.categoria !== 'sandalias').flatMap(p => p.variantes.map(v => cdPrecio(p, v))).filter(Boolean).map(x => x.venta);
   if (ventas.length) $('#heroFrom').textContent = 'Tenis desde ' + cdFormato(Math.min(...ventas));
-  const imp = CD_PRODUCTS.filter(p => p.linea === 'importados').flatMap(p => p.variantes.map(v => cdPrecio(p, v))).filter(Boolean).map(x => x.venta);
-  if (imp.length) $('#impFrom').textContent = 'Desde ' + cdFormato(Math.min(...imp));
 
-  // Enlace directo a un modelo: index.html#calamar
+  // Enlaces directos: #calamar (modelo), #mujer, #hombre-casual (categoría)
   const openFromHash = () => {
     const id = decodeURIComponent(location.hash.slice(1));
-    if (CD_PRODUCTS.some(p => p.id === id)) openModal(id);
+    if (CD_PRODUCTS.some(p => p.id === id)) return openModal(id);
+    const m = id.match(/^(mujer|hombre)(?:-(.+))?$/);
+    if (m && (!m[2] || CD_CATEGORIAS[m[1]].some(c => c.id === m[2]))) setFiltro(m[1], m[2] || 'todas', true);
   };
   openFromHash();
   window.addEventListener('hashchange', openFromHash);
