@@ -42,6 +42,7 @@ a { color: inherit; }
 .announce { background: var(--ink); color: #e9e3da; font-size: 11px; letter-spacing: .08em; padding: 9px 16px; overflow: hidden; }
 .announce-track { display: flex; justify-content: center; gap: 28px; white-space: nowrap; }
 .announce-track span + span::before { content: "•"; color: var(--gold); margin-right: 28px; }
+.announce-track .dup { display: none; }
 .announce b { color: var(--gold-2); }
 .announce-sep { color: var(--gold); }
 
@@ -322,10 +323,13 @@ a { color: inherit; }
 /* ---------- Celular ---------- */
 @media (max-width: 719px) {
   /* Avisos: uno a la vez, rotando */
-  .announce-track { position: relative; height: 14px; display: block; }
-  .announce-track span { position: absolute; inset: 0; text-align: center; opacity: 0; visibility: hidden; transition: opacity .5s, visibility .5s; }
-  .announce-track span.on { opacity: 1; visibility: visible; }
-  .announce-track span + span::before { content: none; }
+  /* Avisos: una sola línea que se desplaza */
+  .announce { padding: 9px 0; }
+  .announce-track { justify-content: flex-start; width: max-content; gap: 0; animation: cinta 22s linear infinite; }
+  .announce-track span { padding-right: 28px; }
+  .announce-track .dup { display: inline; }
+  .announce-track .dup-first::before { content: "•"; color: var(--gold); margin-right: 28px; }
+  .announce-track span + span::before { margin-right: 28px; }
   .card .price .from + .now + .was { display: none; }
   /* Beneficios más compactos */
   .perks-in { gap: 14px 12px; padding-top: 18px; padding-bottom: 18px; }
@@ -356,7 +360,9 @@ a { color: inherit; }
   .footer { padding-bottom: 100px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .announce-track span { transition: none; }
+  .announce-track { animation: none; }
   * { scroll-behavior: auto !important; }
 }
 :focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+@keyframes cinta { from { transform: translateX(0); } to { transform: translateX(-50%); } }

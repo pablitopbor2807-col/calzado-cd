@@ -281,11 +281,11 @@ document.addEventListener('DOMContentLoaded', () => {
   $('#waFloat').href = saludo;
   $('#footerWa').href = saludo;
 
-  // Avisos de arriba: en celular se muestran de a uno
-  const avisos = [...document.querySelectorAll('.announce-track span')];
-  let ai = 0;
-  avisos[0].classList.add('on');
-  setInterval(() => { avisos[ai].classList.remove('on'); ai = (ai + 1) % avisos.length; avisos[ai].classList.add('on'); }, 4000);
+  // Avisos de arriba: en celular es una cinta que se desplaza; se duplica el texto para que no se corte
+  const cinta = $('.announce-track');
+  const copia = [...cinta.children].map(n => { const c = n.cloneNode(true); c.classList.add('dup'); c.setAttribute('aria-hidden', 'true'); return c; });
+  copia[0].classList.add('dup-first');
+  cinta.append(...copia);
 
   buildCats();
   $('#premiumRow').innerHTML = CD_PREMIUM.map(([id, vi]) => {
