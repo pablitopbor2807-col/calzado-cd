@@ -80,24 +80,46 @@ function cardHTML(p, vi) {
   const alt = v.fotos[1] || (p.variantes[1] && p.variantes[1].fotos[0]);
   const n = p.variantes.length;
   const t = cdTallas(p);
-  const sw = p.variantes.slice(0, 5).map(x => `<span class="sw" style="background:${x.hex}" title="${x.color}"></span>`).join('') +
+  const iv = p.variantes.indexOf(v);
+  const sw = p.variantes.slice(0, 5).map((x, i) => `<button type="button" class="sw ${i === iv ? 'is-active' : ''}" data-sw="${i}" style="background:${x.hex}" title="${x.color}" aria-label="Ver color ${x.color}"></button>`).join('') +
     (n > 5 ? `<span class="sw-more">+${n - 5}</span>` : '');
   const rango = t.length > 1 ? `Tallas ${t[0]}–${t[t.length - 1]}` : `Talla ${t[0]}`;
-  return `<button class="card" data-id="${p.id}" data-color="${p.variantes.indexOf(v)}">
+  return `<article class="card" tabindex="0" role="link" aria-label="Ver ${p.nombre}" data-id="${p.id}" data-color="${iv}">
     <div class="card-media">
       ${pr ? `<span class="badge">−${PCT}%</span>` : ''}
       ${p.categoria === 'importados' ? '<span class="tag-imp">Importado</span>' : ''}
-      <img src="${v.fotos[0]}" alt="Tenis ${p.nombre} ${v.color}" loading="lazy">
-      ${alt ? `<img class="alt" src="${alt}" alt="" loading="lazy">` : ''}
+      <img class="main" src="${v.fotos[0]}" alt="Tenis ${p.nombre} ${v.color}" loading="lazy">
+      <img class="alt" src="${alt || v.fotos[0]}" alt="" loading="lazy">
     </div>
     <div class="card-body">
       <p class="card-kicker">${CD_GENEROS[p.genero]} · ${catNombre(p.genero, p.categoria)}</p>
       <h3 class="card-name">${p.nombre}</h3>
-      <p class="card-meta">${n > 1 ? n + ' colores' : v.color} · ${rango}</p>
+      <p class="card-meta"><span class="card-color">${v.color}</span> · ${rango}</p>
       <div class="swatches">${sw}</div>
       <div class="price">${priceHTML(pr, { desde: pr && pr.varia })}</div>
     </div>
-  </button>`;
+  </article>`;
+}
+
+/* Tarjeta: tocar un color cambia la foto; tocar el resto abre la ficha con ese color */
+function onCardClick(e) {
+  const card = e.target.closest('.card'); if (!card) return;
+  const sw = e.target.closest('[data-sw]');
+  const p = CD_PRODUCTS.find(x => x.id === card.dataset.id);
+  if (sw) {
+    const i = +sw.dataset.sw, v = p.variantes[i];
+    card.dataset.color = i;
+    const main = card.querySelector('img.main'), alt = card.querySelector('img.alt');
+    main.src = v.fotos[0]; main.alt = `Tenis ${p.nombre} ${v.color}`;
+    alt.src = v.fotos[1] || v.fotos[0];
+    card.querySelector('.card-color').textContent = v.color;
+    card.querySelectorAll('[data-sw]').forEach(b => b.classList.toggle('is-active', b === sw));
+    return;
+  }
+  openModal(p.id, +card.dataset.color);
+}
+function onCardKey(e) {
+  if ((e.key === 'Enter' || e.key === ' ') && e.target.classList.contains('card')) { e.preventDefault(); onCardClick(e); }
 }
 
 function render() {
@@ -189,7 +211,15 @@ function paintModal() {
   const { p, vi } = modal;
   const v = p.variantes[vi];
   const pr = cdPrecio(p, v);
-  $('#mImg').src = v.fotos[modal.foto];
+  const img = $('#mImg'), src = v.fotos[modal.foto];
+  if (img.getAttribute('src') !== src) {
+    img.classList.add('loading');
+    img.onload = () => img.classList.remove('loading');
+    img.src = src;
+    if (img.complete) img.classList.remove('loading');
+  }
+  // Precarga las fotos de los otros colores para que el cambio sea inmediato
+  p.variantes.forEach(x => { const i = new Image(); i.src = x.fotos[0]; });
   $('#mImg').alt = `Tenis ${p.nombre} ${v.color}`;
   $('#mBadge').hidden = !pr;
   $('#mBadge').textContent = `−${PCT}%`;
@@ -276,10 +306,9 @@ function toast(msg) {
 
 /* ---------- Eventos ---------- */
 document.addEventListener('DOMContentLoaded', () => {
-  $('#year').textContent = new Date().getFullYear();
+  document.querySelectorAll('.year').forEach(y => y.textContent = new Date().getFullYear());
   const saludo = waLink('Hola Calzado C&D 👋 Quiero información sobre sus tenis.');
   $('#waFloat').href = saludo;
-  $('#footerWa').href = saludo;
 
   // Avisos de arriba: en celular es una cinta que se desplaza; se duplica el texto para que no se corte
   const cinta = $('.announce-track');
@@ -292,7 +321,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const p = CD_PRODUCTS.find(x => x.id === id);
     return p ? cardHTML(p, vi) : '';
   }).join('');
-  $('#premiumRow').addEventListener('click', e => { const c = e.target.closest('.card'); if (c) openModal(c.dataset.id, +c.dataset.color); });
+  $('#premiumRow').addEventListener('click', onCardClick);
+  $('#premiumRow').addEventListener('keydown', onCardKey);
   paintFilters();
   render();
   paintBag();
@@ -330,10 +360,8 @@ document.addEventListener('DOMContentLoaded', () => {
     openModal(b.dataset.open, vi);
   }));
 
-  $('#grid').addEventListener('click', e => {
-    const c = e.target.closest('.card');
-    if (c) openModal(c.dataset.id, +c.dataset.color);
-  });
+  $('#grid').addEventListener('click', onCardClick);
+  $('#grid').addEventListener('keydown', onCardKey);
 
   $('#modal').addEventListener('click', e => {
     if (e.target.closest('[data-close]')) return closeModal();

@@ -3046,16 +3046,6 @@ const CD_PRODUCTS = [
         ]
       },
       {
-        "color": "Cafe",
-        "hex": "#6b4a33",
-        "tallas": [
-          40
-        ],
-        "fotos": [
-          "assets/img/dama/d-nova-cafe-0.jpg"
-        ]
-      },
-      {
         "color": "Lima",
         "hex": "#cfc8bd",
         "tallas": [
