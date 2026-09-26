@@ -101,10 +101,7 @@ const PRECIO_MAYORISTA = {
   'd-valu': 80000,  // Valu
   'd-mulan': 75000,  // Mulan
   'd-vina': null,  // Vina
-  'd-seleccion-1': 75000,  // Selección 1
-  'd-seleccion-2': 75000,  // Selección 2
-  'd-seleccion-3': 75000,  // Selección 3
-  'd-seleccion-4': 75000,  // Selección 4
+  'd-seleccion': 75000,  // Selección Colombia
   'd-penelope': 85000,  // Penelope
   'd-rihaza': 85000,  // Rihaza
   'd-emperatriz': 85000,  // Emperatriz
@@ -3344,8 +3341,8 @@ const CD_PRODUCTS = [
     ]
   },
   {
-    "id": "d-seleccion-1",
-    "nombre": "Selección 1",
+    "id": "d-seleccion",
+    "nombre": "Selección Colombia",
     "genero": "mujer",
     "categoria": "retro",
     "variantes": [
@@ -3378,17 +3375,9 @@ const CD_PRODUCTS = [
         "fotos": [
           "assets/img/dama/d-seleccion-1-amarillo-0.jpg"
         ]
-      }
-    ]
-  },
-  {
-    "id": "d-seleccion-2",
-    "nombre": "Selección 2",
-    "genero": "mujer",
-    "categoria": "retro",
-    "variantes": [
+      },
       {
-        "color": "Rojo",
+        "color": "Rojo 2",
         "hex": "#c0242c",
         "tallas": [
           35,
@@ -3397,15 +3386,7 @@ const CD_PRODUCTS = [
         "fotos": [
           "assets/img/dama/d-seleccion-2-rojo-0.jpg"
         ]
-      }
-    ]
-  },
-  {
-    "id": "d-seleccion-3",
-    "nombre": "Selección 3",
-    "genero": "mujer",
-    "categoria": "retro",
-    "variantes": [
+      },
       {
         "color": "Talco",
         "hex": "#f1eee8",
@@ -3416,17 +3397,9 @@ const CD_PRODUCTS = [
         "fotos": [
           "assets/img/dama/d-seleccion-3-talco-0.jpg"
         ]
-      }
-    ]
-  },
-  {
-    "id": "d-seleccion-4",
-    "nombre": "Selección 4",
-    "genero": "mujer",
-    "categoria": "retro",
-    "variantes": [
+      },
       {
-        "color": "Talco",
+        "color": "Talco 2",
         "hex": "#f1eee8",
         "tallas": [
           35

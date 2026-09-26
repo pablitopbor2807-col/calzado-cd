@@ -80,8 +80,9 @@ function cardHTML(p, vi) {
   const alt = v.fotos[1] || (p.variantes[1] && p.variantes[1].fotos[0]);
   const n = p.variantes.length;
   const t = cdTallas(p);
-  const sw = p.variantes.slice(0, 7).map(x => `<span class="sw" style="background:${x.hex}" title="${x.color}"></span>`).join('') +
-    (n > 7 ? `<span class="sw-more">+${n - 7}</span>` : '');
+  const sw = p.variantes.slice(0, 5).map(x => `<span class="sw" style="background:${x.hex}" title="${x.color}"></span>`).join('') +
+    (n > 5 ? `<span class="sw-more">+${n - 5}</span>` : '');
+  const rango = t.length > 1 ? `Tallas ${t[0]}–${t[t.length - 1]}` : `Talla ${t[0]}`;
   return `<button class="card" data-id="${p.id}" data-color="${p.variantes.indexOf(v)}">
     <div class="card-media">
       ${pr ? `<span class="badge">−${PCT}%</span>` : ''}
@@ -92,7 +93,7 @@ function cardHTML(p, vi) {
     <div class="card-body">
       <p class="card-kicker">${CD_GENEROS[p.genero]} · ${catNombre(p.genero, p.categoria)}</p>
       <h3 class="card-name">${p.nombre}</h3>
-      <p class="card-meta">${n > 1 ? n + ' colores' : v.color} · Tallas ${t[0]}–${t[t.length - 1]}</p>
+      <p class="card-meta">${n > 1 ? n + ' colores' : v.color} · ${rango}</p>
       <div class="swatches">${sw}</div>
       <div class="price">${priceHTML(pr, { desde: pr && pr.varia })}</div>
     </div>
@@ -279,6 +280,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const saludo = waLink('Hola Calzado C&D 👋 Quiero información sobre sus tenis.');
   $('#waFloat').href = saludo;
   $('#footerWa').href = saludo;
+
+  // Avisos de arriba: en celular se muestran de a uno
+  const avisos = [...document.querySelectorAll('.announce-track span')];
+  let ai = 0;
+  avisos[0].classList.add('on');
+  setInterval(() => { avisos[ai].classList.remove('on'); ai = (ai + 1) % avisos.length; avisos[ai].classList.add('on'); }, 4000);
 
   buildCats();
   $('#premiumRow').innerHTML = CD_PREMIUM.map(([id, vi]) => {

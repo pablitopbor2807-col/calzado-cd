@@ -39,7 +39,9 @@ a { color: inherit; }
 .btn[disabled] { opacity: .45; cursor: not-allowed; }
 
 /* Barra superior */
-.announce { background: var(--ink); color: #e9e3da; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; text-align: center; padding: 9px 16px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+.announce { background: var(--ink); color: #e9e3da; font-size: 11px; letter-spacing: .08em; padding: 9px 16px; overflow: hidden; }
+.announce-track { display: flex; justify-content: center; gap: 28px; white-space: nowrap; }
+.announce-track span + span::before { content: "•"; color: var(--gold); margin-right: 28px; }
 .announce b { color: var(--gold-2); }
 .announce-sep { color: var(--gold); }
 
@@ -66,7 +68,7 @@ a { color: inherit; }
 .split-panel { position: relative; display: block; border-radius: 14px; overflow: hidden; aspect-ratio: 3 / 4; background: var(--ink); color: #fff; text-decoration: none; }
 .split-panel img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s ease; }
 .split-panel:hover img { transform: scale(1.04); }
-.split-panel::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(10, 17, 29, .88) 0%, rgba(10, 17, 29, .25) 45%, rgba(10, 17, 29, 0) 70%); }
+.split-panel::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(10, 17, 29, .92) 0%, rgba(10, 17, 29, .45) 45%, rgba(10, 17, 29, 0) 75%); }
 .split-info { position: absolute; left: 14px; right: 14px; bottom: 14px; z-index: 1; display: grid; gap: 2px; }
 .split-info small { font-size: 10px; font-weight: 700; letter-spacing: .24em; text-transform: uppercase; color: var(--gold-2); }
 .split-info b { font-family: var(--head); font-size: clamp(40px, 9vw, 96px); font-weight: 600; text-transform: uppercase; line-height: .95; }
@@ -124,14 +126,16 @@ a { color: inherit; }
 .card-media { position: relative; border-radius: 12px; overflow: hidden; background: var(--stone); aspect-ratio: 5 / 6; }
 .card-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity .35s, transform .5s; }
 .card-media img.alt { opacity: 0; }
-.card:hover .card-media img.alt { opacity: 1; }
-.card:hover .card-media img { transform: scale(1.03); }
+@media (hover: hover) {
+  .card:hover .card-media img.alt { opacity: 1; }
+  .card:hover .card-media img { transform: scale(1.03); }
+}
 .badge { position: absolute; top: 10px; left: 10px; z-index: 2; background: var(--sale); color: #fff; font-size: 11px; font-weight: 700; letter-spacing: .06em; padding: 5px 9px; border-radius: 6px; }
 .tag-imp { position: absolute; top: 10px; right: 10px; z-index: 2; background: var(--ink); color: var(--gold-2); font-size: 9px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; padding: 5px 8px; border-radius: 6px; }
 .card-body { padding: 12px 2px 0; }
 .card-name { font-family: var(--head); font-size: 19px; font-weight: 600; text-transform: uppercase; letter-spacing: .02em; margin: 0; line-height: 1.1; }
 .card-meta { font-size: 11px; color: var(--muted); margin: 4px 0 8px; letter-spacing: .02em; }
-.swatches { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+.swatches { display: flex; gap: 6px; flex-wrap: nowrap; align-items: center; margin-bottom: 10px; min-height: 18px; }
 .sw { width: 16px; height: 16px; border-radius: 50%; border: 1px solid rgba(0, 0, 0, .18); box-shadow: inset 0 0 0 2px #fff; padding: 0; }
 .swatches.lg .sw { width: 30px; height: 30px; box-shadow: inset 0 0 0 3px #fff; }
 .sw.is-active { outline: 2px solid var(--ink); outline-offset: 2px; }
@@ -314,3 +318,45 @@ a { color: inherit; }
 
   .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
+
+/* ---------- Celular ---------- */
+@media (max-width: 719px) {
+  /* Avisos: uno a la vez, rotando */
+  .announce-track { position: relative; height: 14px; display: block; }
+  .announce-track span { position: absolute; inset: 0; text-align: center; opacity: 0; visibility: hidden; transition: opacity .5s, visibility .5s; }
+  .announce-track span.on { opacity: 1; visibility: visible; }
+  .announce-track span + span::before { content: none; }
+  .card .price .from + .now + .was { display: none; }
+  /* Beneficios más compactos */
+  .perks-in { gap: 14px 12px; padding-top: 18px; padding-bottom: 18px; }
+  .perk { gap: 8px; align-items: flex-start; }
+  .perk svg { width: 32px; height: 32px; padding: 7px; }
+  .perk b { font-size: 11px; }
+  .perk span { font-size: 11px; line-height: 1.35; }
+  /* Cómo comprar en lista compacta */
+  .how { padding: 40px 0 48px; }
+  .steps { gap: 0; margin-top: 18px; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); }
+  .steps li { display: grid; grid-template-columns: 36px 1fr; column-gap: 12px; border: 0; border-radius: 0; padding: 16px; border-bottom: 1px solid var(--line); background: none; }
+  .steps li:last-child { border-bottom: 0; }
+  .steps span { grid-row: span 2; font-size: 28px; margin: 0; }
+  .steps p { font-size: 13px; margin-top: 2px; }
+  /* Envíos: tarjetas más bajas */
+  .ship { padding-bottom: 48px; }
+  .ship-grid { margin-top: 18px; gap: 10px; }
+  .ship-card { display: grid; grid-template-columns: 34px 1fr; column-gap: 14px; padding: 18px; }
+  .ship-card svg { grid-row: span 3; width: 30px; height: 30px; }
+  .ship-card b { margin-top: 0; }
+  .ship-card .ship-big { font-size: 24px; margin: 2px 0; }
+  /* Catálogo */
+  .catalog { padding-top: 44px; }
+  .card-name { font-size: 17px; }
+  .price .now { font-size: 15px; }
+  .cats { padding-top: 44px; }
+  .premium { padding-top: 44px; }
+  .footer { padding-bottom: 100px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .announce-track span { transition: none; }
+  * { scroll-behavior: auto !important; }
+}
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
