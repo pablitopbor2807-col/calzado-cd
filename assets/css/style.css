@@ -69,9 +69,9 @@ a { color: inherit; }
 .split-panel img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s ease; }
 .split-panel:hover img { transform: scale(1.04); }
 .split-panel::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(10, 17, 29, .92) 0%, rgba(10, 17, 29, .45) 45%, rgba(10, 17, 29, 0) 75%); }
-.split-info { position: absolute; left: 14px; right: 14px; bottom: 14px; z-index: 1; display: grid; gap: 2px; }
+.split-info { position: absolute; left: 14px; right: 14px; bottom: 14px; z-index: 1; display: grid; gap: 4px; }
 .split-info small { font-size: 10px; font-weight: 700; letter-spacing: .24em; text-transform: uppercase; color: var(--gold-2); }
-.split-info b { font-family: var(--head); font-size: clamp(40px, 9vw, 96px); font-weight: 600; text-transform: uppercase; line-height: .95; }
+.split-info b { font-family: var(--head); font-size: clamp(40px, 9vw, 96px); font-weight: 600; text-transform: uppercase; line-height: 1; padding-top: .2em; }
 .split-sub { font-size: 12px; opacity: .85; display: none; }
 .split-cta { margin-top: 8px; font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; display: inline-flex; gap: 8px; align-items: center; }
 .split-cta i { font-style: normal; transition: transform .25s; }
