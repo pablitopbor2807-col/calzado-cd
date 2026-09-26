@@ -321,6 +321,14 @@ a { color: inherit; }
 }
 
 /* ---------- Celular ---------- */
+@media (max-width: 959px) {
+  /* Logo centrado y más grande */
+  .header-in { display: grid; grid-template-columns: 44px 1fr 44px; height: 78px; gap: 8px; }
+  .brand { grid-column: 2; justify-self: center; }
+  .brand img { height: 60px; }
+  .bag-btn { grid-column: 3; justify-self: end; }
+  .filters { top: 78px; }
+}
 @media (max-width: 719px) {
   /* Avisos: uno a la vez, rotando */
   /* Avisos: una sola línea que se desplaza */
