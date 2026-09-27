@@ -331,7 +331,7 @@ a { color: inherit; }
   .policy { padding: 30px 34px; }
   .cats-grid { grid-auto-flow: row; grid-template-columns: repeat(3, minmax(0, 1fr)); overflow: visible; }
   #catsHombre .cat-card { aspect-ratio: 3 / 2; }
-  #catsMujer { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  #catsMujer { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .imported-in { grid-template-columns: 1.1fr 1fr; }
   .hero { padding: 48px 0 56px; }
   .hero-head { grid-template-columns: 1.3fr 1fr; align-items: end; gap: 40px; margin-bottom: 30px; }
@@ -348,7 +348,7 @@ a { color: inherit; }
 }
 @media (min-width: 960px) {
   .split-panel { aspect-ratio: 16 / 13; }
-  #catsMujer { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  #catsMujer { grid-template-columns: repeat(6, minmax(0, 1fr)); }
   .filters { position: sticky; top: 66px; z-index: 20; }
   .filters .search { max-width: 420px; }
   .nav { display: flex; }

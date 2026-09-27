@@ -75,7 +75,9 @@ const PRECIO_MAYORISTA = {
   // ---------- Mujer ----------
   'd-comfy': 95000,  // Comfy
   'd-soso': 95000,  // Soso
-  'd-anahi': 130000,  // Anahi
+  'd-anahi-taupe': 130000,  // Anahí Taupe
+  'd-anahi-miel': 130000,  // Anahí Miel
+  'd-anahi-cafe': 130000,  // Anahí Café
   'd-tokisha': 90000,  // Tokisha
   'd-tokisha-new': 90000,  // Tokisha New
   'd-wish': 40000,  // Wish
@@ -254,6 +256,7 @@ const CD_CATEGORIAS = {
     { id: 'plataforma', nombre: 'Plataforma', desc: 'Suela alta, look limpio' },
     { id: 'deportivos', nombre: 'Deportivos', desc: 'Chunky y running' },
     { id: 'retro', nombre: 'Retro', desc: 'Rayas y suela caramelo' },
+    { id: 'mocasines', nombre: 'Mocasines', desc: 'Plataforma en gamuza' },
     { id: 'sandalias', nombre: 'Sandalias y pantuflas', desc: 'Comodidad total' },
     { id: 'importados', nombre: 'Importados', desc: 'Alta gama' }
   ]
@@ -2113,10 +2116,10 @@ const CD_PRODUCTS = [
     ]
   },
   {
-    "id": "d-anahi",
-    "nombre": "Anahi",
+    "id": "d-anahi-taupe",
+    "nombre": "Anahí Taupe",
     "genero": "mujer",
-    "categoria": "sandalias",
+    "categoria": "mocasines",
     "variantes": [
       {
         "color": "Taupe",
@@ -2130,7 +2133,15 @@ const CD_PRODUCTS = [
         "fotos": [
           "assets/img/dama/d-anahi-taupe-0.jpg"
         ]
-      },
+      }
+    ]
+  },
+  {
+    "id": "d-anahi-miel",
+    "nombre": "Anahí Miel",
+    "genero": "mujer",
+    "categoria": "mocasines",
+    "variantes": [
       {
         "color": "Miel",
         "hex": "#b9793a",
@@ -2144,9 +2155,17 @@ const CD_PRODUCTS = [
         "fotos": [
           "assets/img/dama/d-anahi-miel-0.jpg"
         ]
-      },
+      }
+    ]
+  },
+  {
+    "id": "d-anahi-cafe",
+    "nombre": "Anahí Café",
+    "genero": "mujer",
+    "categoria": "mocasines",
+    "variantes": [
       {
-        "color": "Cafe Abano",
+        "color": "Café abano",
         "hex": "#6b4a33",
         "tallas": [
           36,

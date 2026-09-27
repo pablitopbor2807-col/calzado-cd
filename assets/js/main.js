@@ -14,12 +14,12 @@ const PCT = Math.round(CD_REBAJA * 100);
 const PAGINA = 24;
 
 // Modelos de la selección premium en la portada (id, índice del color)
-const CD_PREMIUM = [['d-maryury', 0], ['juance', 0], ['d-anahi', 2], ['cristiano', 1], ['d-ciaga', 1], ['delta', 1], ['d-pai-de-durazno', 0], ['d-quintanilla', 0]];
+const CD_PREMIUM = [['d-maryury', 0], ['juance', 0], ['d-anahi-cafe', 0], ['cristiano', 1], ['d-ciaga', 1], ['delta', 1], ['d-pai-de-durazno', 0], ['d-quintanilla', 0]];
 
 // Foto de portada de cada categoría: [id del modelo, índice del color]
 const CD_PORTADAS = {
   'mujer-plataforma': ['d-bloom', 0], 'mujer-deportivos': ['d-nova', 0], 'mujer-retro': ['d-quintero', 0],
-  'mujer-sandalias': ['d-comfy', 0], 'mujer-importados': ['d-maryury', 0],
+  'mujer-mocasines': ['d-anahi-taupe', 0], 'mujer-sandalias': ['d-comfy', 0], 'mujer-importados': ['d-maryury', 0],
   'hombre-casual': ['smood', 1], 'hombre-deportivos': ['calamar', 1], 'hombre-importados': ['juance', 0]
 };
 
@@ -60,7 +60,7 @@ function filtrados() {
   const pv = p => (precioDesde(p) || {}).venta;
   if (state.orden === 'destacados' && state.genero === 'todos') {
     // Mezcla mujer y hombre para que se vean ambos desde el inicio
-    const orden = { retro: 0, plataforma: 1, deportivos: 2, importados: 3, sandalias: 4 };
+    const orden = { retro: 0, plataforma: 1, deportivos: 2, importados: 3, mocasines: 4, sandalias: 5 };
     const m = list.filter(p => p.genero === 'mujer').sort((a, b) => orden[a.categoria] - orden[b.categoria]);
     const h = list.filter(p => p.genero === 'hombre'), out = [];
     while (m.length || h.length) { out.push(...m.splice(0, 2)); if (h.length) out.push(h.shift()); }
