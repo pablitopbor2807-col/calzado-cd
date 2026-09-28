@@ -60,7 +60,6 @@ const PRECIO_MAYORISTA = {
   'connor': 75000,  // Connor
   'leo': 75000,  // Leo
   'juance': 95000,  // Juance
-  'cristiano': 95000,  // Cristiano
   'molotov': 95000,  // Molotov
   'enigma': 95000,  // Enigma
   'delta': 95000,  // Delta
@@ -101,7 +100,6 @@ const PRECIO_MAYORISTA = {
   'd-valu': 80000,  // Valu
   'd-mulan': 75000,  // Mulan
   'd-vina': null,  // Vina
-  'd-seleccion': 75000,  // Selección Colombia
   'd-penelope': 85000,  // Penelope
   'd-rihaza': 85000,  // Rihaza
   'd-emperatriz': 85000,  // Emperatriz
@@ -1789,58 +1787,6 @@ const CD_PRODUCTS = [
     "categoria": "importados"
   },
   {
-    "id": "cristiano",
-    "nombre": "Cristiano",
-    "variantes": [
-      {
-        "color": "Negro",
-        "hex": "#111111",
-        "tallas": [
-          39,
-          40,
-          41,
-          42,
-          43
-        ],
-        "fotos": [
-          "assets/img/productos/cristiano-negro-3210.jpg",
-          "assets/img/productos/cristiano-negro-3211.jpg"
-        ]
-      },
-      {
-        "color": "Negro / Rojo",
-        "hex": "#b3202a",
-        "tallas": [
-          39,
-          40,
-          42,
-          43
-        ],
-        "fotos": [
-          "assets/img/productos/cristiano-negro-rojo-3300.jpg",
-          "assets/img/productos/cristiano-negro-rojo-3301.jpg"
-        ]
-      },
-      {
-        "color": "Negro / Gris",
-        "hex": "#b5bcc4",
-        "tallas": [
-          39,
-          40,
-          41,
-          42,
-          43
-        ],
-        "fotos": [
-          "assets/img/productos/cristiano-negro-gris-3310.jpg",
-          "assets/img/productos/cristiano-negro-gris-3311.jpg"
-        ]
-      }
-    ],
-    "genero": "hombre",
-    "categoria": "importados"
-  },
-  {
     "id": "molotov",
     "nombre": "Molotov",
     "variantes": [
@@ -3196,76 +3142,6 @@ const CD_PRODUCTS = [
         "fotos": [
           "assets/img/dama/d-vina-animal-print-0.jpg",
           "assets/img/dama/d-vina-animal-print-1.jpg"
-        ]
-      }
-    ]
-  },
-  {
-    "id": "d-seleccion",
-    "nombre": "Selección Colombia",
-    "genero": "mujer",
-    "categoria": "retro",
-    "variantes": [
-      {
-        "color": "Rojo",
-        "hex": "#c0242c",
-        "tallas": [
-          35,
-          36,
-          37,
-          38,
-          39,
-          40
-        ],
-        "fotos": [
-          "assets/img/dama/d-seleccion-1-rojo-0.jpg"
-        ]
-      },
-      {
-        "color": "Amarillo",
-        "hex": "#f1c40f",
-        "tallas": [
-          35,
-          36,
-          37,
-          38,
-          39,
-          40
-        ],
-        "fotos": [
-          "assets/img/dama/d-seleccion-1-amarillo-0.jpg"
-        ]
-      },
-      {
-        "color": "Rojo 2",
-        "hex": "#c0242c",
-        "tallas": [
-          35,
-          40
-        ],
-        "fotos": [
-          "assets/img/dama/d-seleccion-2-rojo-0.jpg"
-        ]
-      },
-      {
-        "color": "Talco",
-        "hex": "#f1eee8",
-        "tallas": [
-          36,
-          38
-        ],
-        "fotos": [
-          "assets/img/dama/d-seleccion-3-talco-0.jpg"
-        ]
-      },
-      {
-        "color": "Talco 2",
-        "hex": "#f1eee8",
-        "tallas": [
-          35
-        ],
-        "fotos": [
-          "assets/img/dama/d-seleccion-4-talco-0.jpg"
         ]
       }
     ]

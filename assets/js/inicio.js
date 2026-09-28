@@ -1,7 +1,7 @@
 /* Calzado C&D — portada */
 
 // Selección premium (id del modelo, índice del color)
-const CD_PREMIUM = [['d-maryury', 0], ['juance', 0], ['d-anahi-cafe', 0], ['cristiano', 1], ['d-ciaga', 1], ['delta', 1], ['d-pai-de-durazno', 0], ['d-quintanilla', 0]];
+const CD_PREMIUM = [['d-maryury', 0], ['juance', 0], ['d-anahi-cafe', 0], ['enigma', 1], ['d-ciaga', 1], ['delta', 1], ['d-pai-de-durazno', 0], ['d-quintanilla', 0]];
 
 // Foto de portada de cada categoría: [id del modelo, índice del color]
 const CD_PORTADAS = {
