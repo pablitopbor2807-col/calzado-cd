@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://pablitopbor2807-col.github.io/calzado-cd/sitemap.xml
