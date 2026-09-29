@@ -359,7 +359,7 @@ a.tab { text-decoration: none; display: inline-flex; align-items: center; gap: 4
 .band-photos a:hover img { transform: scale(1.04); }
 
 /* Sección Mocasines (fondo café, carrusel 3D) */
-.moca { --cafe: #3b2519; --cafe-2: #5a3a28; --crema: #f1e3cf; height: 100vh; height: 100svh; min-height: 560px; max-height: 960px; margin-top: 56px; color: var(--crema); overflow: hidden; display: flex; align-items: center;
+.moca { --cafe: #3b2519; --cafe-2: #5a3a28; --crema: #f1e3cf; height: 100vh; height: 100svh; min-height: 560px; max-height: 960px; margin-top: 0; color: var(--crema); overflow: hidden; display: flex; align-items: center;
   background: radial-gradient(ellipse 70% 60% at 68% 55%, #7a5036 0%, rgba(122, 80, 54, 0) 70%), linear-gradient(160deg, var(--cafe-2), var(--cafe) 60%, #2a1a12); }
 .moca-in { width: 100%; height: 100%; display: grid; grid-template-rows: auto 1fr; gap: 8px; padding-block: 28px; }
 .moca-copy h2 { font-family: var(--head); text-transform: uppercase; font-weight: 700; font-size: clamp(46px, 12vw, 110px); line-height: .9; margin: 0 0 10px; color: #fff; letter-spacing: .01em; }
@@ -377,7 +377,9 @@ a.tab { text-decoration: none; display: inline-flex; align-items: center; gap: 4
 .moca-card::after { content: ""; position: absolute; left: 12%; right: 12%; bottom: -26px; height: 22px; border-radius: 50%; background: radial-gradient(closest-side, rgba(0, 0, 0, .55), transparent); transform: translateZ(-1px); }
 .moca-cap { position: absolute; left: 12px; right: 12px; bottom: 12px; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; background: rgba(42, 26, 18, .82); backdrop-filter: blur(6px); border-radius: 10px; padding: 9px 12px; opacity: 0; transition: opacity .5s; }
 .moca-card.is-front .moca-cap { opacity: 1; }
-.moca-cap b { font-family: var(--head); font-weight: 600; text-transform: uppercase; font-size: 17px; color: #fff; }
+.moca-cap b { font-family: var(--head); font-weight: 600; text-transform: uppercase; font-size: 20px; color: #fff; display: block; line-height: 1.05; }
+.moca-cap small { display: block; font-size: 11px; color: #e4d3bd; margin-top: 3px; }
+.moca-cap .cap-r { text-align: right; font-size: 11px; font-weight: 600; color: var(--gold-2); line-height: 1.35; white-space: nowrap; }
 .moca-cap span { font-size: 13px; font-weight: 700; color: var(--gold-2); }
 .moca-nav { display: flex; justify-content: center; align-items: center; gap: 16px; padding-top: 14px; }
 .moca-arrow { width: 42px; height: 42px; border-radius: 50%; border: 1.5px solid rgba(241, 227, 207, .5); background: transparent; color: var(--crema); font-size: 24px; line-height: 1; padding-bottom: 3px; }
@@ -387,7 +389,9 @@ a.tab { text-decoration: none; display: inline-flex; align-items: center; gap: 4
 .moca-dots button.on { width: 26px; background: var(--crema); }
 @media (min-width: 720px) {
   .moca-in { grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); grid-template-rows: 1fr; align-items: center; gap: 40px; }
-  .moca-copy h2 { font-size: clamp(56px, 6.5vw, 96px); }
+  .moca-copy { position: relative; z-index: 20; }
+  .moca-copy h2 { font-size: clamp(50px, 5vw, 80px); }
+  .moca-stage { overflow: hidden; border-radius: 18px; }
   .moca-copy p { font-size: 16px; }
   .moca-stage { height: 100%; }
   .moca-card { width: min(30vw, 400px); margin: calc(min(30vw, 400px) * -0.625) 0 0 calc(min(30vw, 400px) * -0.5); }

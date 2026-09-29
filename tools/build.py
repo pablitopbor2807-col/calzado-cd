@@ -240,6 +240,26 @@ pages['catalogo.html'] = layout(root='', path='catalogo.html', title='Catálogo 
   </section>
 </main>''')
 
+# ---------- Sección de estilos (página de Mujer) ----------
+ESTILOS = '''  <section class="moca" id="estilos" aria-labelledby="estilosTitle">
+    <div class="wrap moca-in">
+      <div class="moca-copy">
+        <h2 id="estilosTitle">Encuentra tu estilo</h2>
+        <p>Sneakers, chunky, retro, mocasines, comfy e importados. Desliza y entra al que más va contigo.</p>
+        <p class="moca-price" id="estiloActual"></p>
+        <a class="btn btn-cream" href="#catalogo">Ver todos los modelos</a>
+      </div>
+      <div class="moca-stage" id="mocaStage">
+        <div class="moca-ring" id="mocaRing"></div>
+        <div class="moca-nav">
+          <button type="button" class="moca-arrow" data-moca="-1" aria-label="Anterior">‹</button>
+          <div class="moca-dots" id="mocaDots"></div>
+          <button type="button" class="moca-arrow" data-moca="1" aria-label="Siguiente">›</button>
+        </div>
+      </div>
+    </div>
+  </section>'''
+
 # ---------- Colecciones ----------
 PORTADA = {'mujer': ('d-maryury', 0), 'hombre': ('juance', 0), 'mujer-plataforma': ('d-bloom', 0), 'mujer-deportivos': ('d-nova', 0),
     'mujer-retro': ('d-quintero', 0), 'mujer-mocasines': ('d-anahi-taupe', 0), 'mujer-sandalias': ('d-comfy', 0),
@@ -269,6 +289,7 @@ for g in ('mujer', 'hombre'):
       <img class="coll-img" src="../{fp.replace('/dama/', '/dama-hd/')}" alt="{E(titulo)}">
     </div>
   </section>
+{ESTILOS if (g == 'mujer' and not c) else ''}
   <section class="catalog" id="catalogo">
     <div class="wrap">
       <div class="catalog-head"><h2 class="section-title" id="catTitle">{E(cat_nombre(g, c) if c else 'Todos los modelos')}</h2><p class="result-count" id="resultCount"></p></div>
@@ -278,7 +299,7 @@ for g in ('mujer', 'hombre'):
 </main>'''
         pages[f'coleccion/{key}.html'] = layout(root='../', path=f'coleccion/{key}.html', title=f'{titulo} — Calzado C&D',
             desc=f'{cdesc} {len(ps)} modelos' + (f' desde {fmt(min(ventas))}' if ventas else '') + '. Envío gratis desde $200.000.',
-            scripts=['catalogo.js'], page={'genero': g, 'cat': c or 'todas'}, body=body,
+            scripts=['catalogo.js'] + (['estilos.js'] if (g == 'mujer' and not c) else []), page={'genero': g, 'cat': c or 'todas'}, body=body,
             og_image=fp.replace('/dama/', '/dama-hd/'))
 
 # ---------- Productos ----------

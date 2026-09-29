@@ -253,7 +253,7 @@ const CD_CATEGORIAS = {
     { id: 'deportivos', nombre: 'Deportivos', desc: 'Chunky y running' },
     { id: 'retro', nombre: 'Retro', desc: 'Rayas y suela caramelo' },
     { id: 'mocasines', nombre: 'Mocasines', desc: 'Plataforma en gamuza' },
-    { id: 'sandalias', nombre: 'Sandalias y pantuflas', desc: 'Comodidad total' },
+    { id: 'sandalias', nombre: 'Comfy y sandalias', desc: 'Pantuflas, sandalias y slides para estar cómoda' },
     { id: 'importados', nombre: 'Importados', desc: 'Alta gama' }
   ]
 };
