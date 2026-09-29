@@ -241,7 +241,7 @@ pages['catalogo.html'] = layout(root='', path='catalogo.html', title='Catálogo 
 </main>''')
 
 # ---------- Sección de estilos (página de Mujer) ----------
-ESTILOS_T = '''  <section class="moca" id="estilos" aria-labelledby="estilosTitle">
+ESTILOS_T = '''  <section class="moca{cls}" id="estilos" aria-labelledby="estilosTitle">
     <div class="wrap moca-in">
       <div class="moca-copy">
         <h2 id="estilosTitle">Encuentra tu estilo</h2>
@@ -292,7 +292,7 @@ for g in ('mujer', 'hombre'):
       <img class="coll-img" src="../{fp.replace('/dama/', '/dama-hd/')}" alt="{E(titulo)}">
     </div>
   </section>
-{ESTILOS_T.replace('{txt}', ESTILOS_TXT[g]) if not c else ''}
+{ESTILOS_T.replace('{txt}', ESTILOS_TXT[g]).replace('{cls}', ' moca-azul' if g == 'hombre' else '') if not c else ''}
   <section class="catalog" id="catalogo">
     <div class="wrap">
       <div class="catalog-head"><h2 class="section-title" id="catTitle">{E(cat_nombre(g, c) if c else 'Todos los modelos')}</h2><p class="result-count" id="resultCount"></p></div>

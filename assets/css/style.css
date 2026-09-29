@@ -396,6 +396,12 @@ a.tab { text-decoration: none; display: inline-flex; align-items: center; gap: 4
   .moca-stage { height: 100%; }
   .moca-card { width: min(30vw, 400px); margin: calc(min(30vw, 400px) * -0.625) 0 0 calc(min(30vw, 400px) * -0.5); }
 }
+/* Versión azul oscuro (página de Hombre) */
+.moca-azul { --cafe: #0F1B2D; --cafe-2: #1C2A40; --crema: #EFEBE6;
+  background: radial-gradient(ellipse 70% 60% at 68% 55%, #2B4166 0%, rgba(43, 65, 102, 0) 70%), linear-gradient(160deg, #1C2A40, #0F1B2D 60%, #0A1320); }
+.moca-azul .moca-copy p { color: #C9C4BB; }
+.moca-azul .moca-cap { background: rgba(10, 19, 32, .82); }
+.moca-azul .moca-cap small { color: #C9C4BB; }
 @media (prefers-reduced-motion: reduce) { .moca-card, .moca-ring { transition: none; } }
 
 /* Compra por talla */
