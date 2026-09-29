@@ -438,6 +438,26 @@ a.tab { text-decoration: none; display: inline-flex; align-items: center; gap: 4
 .moca-azul .moca-copy p { color: #C9C4BB; }
 .moca-azul .moca-cap { background: rgba(10, 19, 32, .82); }
 .moca-azul .moca-cap small { color: #C9C4BB; }
+/* Fondo blanco en las páginas Mujer y Hombre; el texto toma el color de la sección de arriba */
+.moca-blanco { background: #FFFFFF; color: var(--ink); border-top: 0 !important; }
+.moca-m { --tono: #4A2E20; --tono-2: #8A5A3C; }
+.moca-h { --tono: #0F1B2D; --tono-2: #2B4166; }
+.moca-blanco .moca-copy h2 { color: var(--tono); }
+.moca-blanco .moca-copy p { color: #5D6068; }
+.moca-blanco .moca-copy .moca-price { color: var(--tono-2); }
+.moca-blanco .btn-cream { background: var(--tono); color: #fff; }
+.moca-blanco .btn-cream:hover { background: var(--tono-2); }
+.moca-blanco .moca-card { filter: saturate(.85) brightness(.97); }
+.moca-blanco .moca-card:not(.is-front) { opacity: .55; }
+.moca-blanco .moca-card.is-front { filter: none; opacity: 1; }
+.moca-blanco .moca-img { box-shadow: 0 24px 50px rgba(15, 27, 45, .18), 0 0 0 1px rgba(15, 27, 45, .06); }
+.moca-blanco .moca-card::after { background: radial-gradient(closest-side, rgba(15, 27, 45, .22), transparent); }
+.moca-blanco .moca-arrow { border-color: var(--tono); color: var(--tono); }
+.moca-blanco .moca-arrow:hover { background: var(--tono); color: #fff; }
+.moca-blanco .moca-dots button { background: rgba(15, 27, 45, .2); }
+.moca-blanco .moca-dots button.on { background: var(--tono); }
+.moca-m .moca-cap { background: rgba(58, 36, 24, .86); }
+.moca-h .moca-cap { background: rgba(10, 19, 32, .86); }
 @media (prefers-reduced-motion: reduce) { .moca-card, .moca-ring { transition: none; } }
 
 /* Compra por talla */

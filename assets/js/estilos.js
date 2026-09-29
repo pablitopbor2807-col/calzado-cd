@@ -44,7 +44,7 @@ function initEstilos() {
       const a = Math.abs(d);
       c.style.transform = `translateX(${d * 50}%) translateZ(${-a * 220}px) rotateY(${-d * 38}deg)`;
       c.style.zIndex = 10 - a;
-      c.style.opacity = a > 2 ? 0 : 1;
+      c.style.opacity = a > 2 ? 0 : '';
       c.classList.toggle('is-front', d === 0);
       c.setAttribute('tabindex', d === 0 ? '0' : '-1');
     });

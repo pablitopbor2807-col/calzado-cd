@@ -335,7 +335,7 @@ for g in ('mujer', 'hombre'):
       <img class="coll-img" src="../{fp.replace('/dama/', '/dama-hd/')}" alt="{E(titulo)}">
     </div>
   </section>''') + f'''
-{ESTILOS_T.replace('{txt}', ESTILOS_TXT[g]).replace('{cls}', ' moca-azul' if g == 'hombre' else '') if not c else ''}
+{ESTILOS_T.replace('{txt}', ESTILOS_TXT[g]).replace('{cls}', ' moca-blanco moca-h' if g == 'hombre' else ' moca-blanco moca-m') if not c else ''}
   <section class="catalog" id="catalogo">
     <div class="wrap">
       <div class="catalog-head"><h2 class="section-title" id="catTitle">{E(cat_nombre(g, c) if c else 'Todos los modelos')}</h2><p class="result-count" id="resultCount"></p></div>
