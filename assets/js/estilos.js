@@ -1,25 +1,33 @@
 /* Calzado C&D — sección "Encuentra tu estilo" de la página de Mujer: carrusel en 3D */
 
-// Estilos que se muestran: [categoría, nombre del estilo, frase, id del modelo para la foto, índice del color]
-const CD_ESTILOS = [
-  ['plataforma', 'Sneakers', 'Plataforma y look limpio', 'd-bloom', 0],
-  ['deportivos', 'Chunky', 'Deportivos con suela alta', 'd-nova', 0],
-  ['retro', 'Retro', 'Rayas y suela caramelo', 'd-quintero', 0],
-  ['mocasines', 'Mocasines', 'Gamuza con plataforma', 'd-anahi-taupe', 0],
-  ['sandalias', 'Comfy', 'Pantuflas, sandalias y slides', 'd-comfy', 0],
-  ['importados', 'Importados', 'Diseños que no ves en todas partes', 'd-maryury', 0]
-];
+// Estilos que se muestran por género: [categoría, nombre del estilo, frase, id del modelo para la foto, índice del color]
+const CD_ESTILOS = {
+  mujer: [
+    ['plataforma', 'Sneakers', 'Plataforma y look limpio', 'd-bloom', 0],
+    ['deportivos', 'Chunky', 'Deportivos con suela alta', 'd-nova', 0],
+    ['retro', 'Retro', 'Rayas y suela caramelo', 'd-quintero', 0],
+    ['mocasines', 'Mocasines', 'Gamuza con plataforma', 'd-anahi-taupe', 0],
+    ['sandalias', 'Comfy', 'Pantuflas, sandalias y slides', 'd-comfy', 0],
+    ['importados', 'Importados', 'Diseños que no ves en todas partes', 'd-maryury', 0]
+  ],
+  hombre: [
+    ['casual', 'Casual', 'Para el trabajo y el día a día', 'smood', 1],
+    ['deportivos', 'Deportivos', 'Livianos, cómodos y con estilo', 'calamar', 1],
+    ['importados', 'Importados', 'Alta gama que se nota', 'juance', 0]
+  ]
+};
 
 function initEstilos() {
   const ring = $('#mocaRing'); if (!ring) return;
-  const items = CD_ESTILOS.map(([cat, nombre, frase, pid, vi]) => {
-    const ps = CD_PRODUCTS.filter(p => p.genero === 'mujer' && p.categoria === cat);
+  const genero = (window.CD_PAGE && window.CD_PAGE.genero) || 'mujer';
+  const items = CD_ESTILOS[genero].map(([cat, nombre, frase, pid, vi]) => {
+    const ps = CD_PRODUCTS.filter(p => p.genero === genero && p.categoria === cat);
     const p = findProducto(pid) || ps[0];
     if (!ps.length || !p) return null;
     const ventas = ps.map(precioDesde).filter(Boolean).map(x => x.venta);
     return { cat, nombre, frase, n: ps.length, desde: ventas.length ? Math.min(...ventas) : null, foto: (p.variantes[vi] || p.variantes[0]).fotos[0] };
   }).filter(Boolean);
-  ring.innerHTML = items.map((it, i) => `<a class="moca-card" data-i="${i}" href="${urlColeccion('mujer', it.cat)}">
+  ring.innerHTML = items.map((it, i) => `<a class="moca-card" data-i="${i}" href="${urlColeccion(genero, it.cat)}">
       <span class="moca-img"><img src="${ROOT + fotoHD(it.foto)}" alt="${it.nombre}" loading="lazy"></span>
       <span class="moca-cap"><span class="cap-l"><b>${it.nombre}</b><small>${it.frase}</small></span><span class="cap-r">${it.n} modelos${it.desde ? '<br>desde ' + cdFormato(it.desde) : ''}</span></span>
     </a>`).join('');
