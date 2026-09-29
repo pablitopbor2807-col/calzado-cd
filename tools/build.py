@@ -263,6 +263,47 @@ ESTILOS_T = '''  <section class="moca{cls}" id="estilos" aria-labelledby="estilo
 ESTILOS_TXT = {'mujer': 'Sneakers, chunky, retro, mocasines, comfy e importados. Desliza y entra al que más va contigo.',
                'hombre': 'Casual, deportivos e importados. Desliza y entra al que más va contigo.'}
 
+# ---------- Portada de las páginas Mujer y Hombre ----------
+HERO_GEN = {
+  'mujer': {'txt': 'Plataformas, retro, chunky, mocasines, comfy e importados. Tenis que se ven bien y aguantan tu semana.',
+            'fotos': ['assets/img/dama/d-anahi-miel-0.jpg', 'assets/img/dama/d-solange-amareto-0.jpg', 'assets/img/dama/d-quintana-ocre-chocolate-0.jpg']},
+  'hombre': {'txt': 'Casual, deportivos e importados. Para el trabajo, el gimnasio y el fin de semana.',
+            'fotos': ['assets/img/productos/giovanny-azul-810.jpg', 'assets/img/productos/onix-azul-1310.jpg', 'assets/img/productos/calamar-azul-1901.jpg']},
+}
+def buscar_foto(ruta):
+    for p in PRODUCTS:
+        for vi, v in enumerate(p['variantes']):
+            if ruta in v['fotos']: return p, vi
+    raise SystemExit('Foto sin producto: ' + ruta)
+
+def hero_genero(g, ps, ventas):
+    h = HERO_GEN[g]; ts = sorted({t for p in ps for v in p['variantes'] for t in v['tallas']})
+    tiles = []
+    for k, ruta in enumerate(h['fotos']):
+        p, vi = buscar_foto(ruta); pr = precio(p, p['variantes'][vi])
+        src = '../' + ruta.replace('/dama/', '/dama-hd/') if k == 0 else '../' + ruta
+        tiles.append(f"""<a class="gh-tile{' gh-big' if k == 0 else ''}" href="../producto/{slug_prod(p)}.html{'?c=' + str(vi) if vi else ''}">
+          <img src="{src}" alt="Tenis {E(p['nombre'])} {E(p['variantes'][vi]['color'])}"{' loading="lazy"' if k else ''}>
+          <span class="gh-tag"><b>{E(p['nombre'])}</b>{fmt(pr[0]) if pr else ''}</span></a>""")
+    chips = ''.join(f'<a href="../coleccion/{g}-{x["id"]}.html">{E(x["nombre"])}</a>' for x in CATS[g]
+                    if any(p['categoria'] == x['id'] for p in ps))
+    return f'''  <section class="gen-hero gen-{g}">
+    <div class="wrap gen-in">
+      <div class="gen-copy">
+        {crumbs('../', [(GEN[g], None)]).replace('class="crumbs"', 'class="crumbs light"')}
+        <h1>{GEN[g]}</h1>
+        <p>{E(h['txt'])}</p>
+        <dl class="gen-stats">
+          <div><dt>Modelos</dt><dd>{len(ps)}</dd></div>
+          <div><dt>Desde</dt><dd>{fmt(min(ventas))}</dd></div>
+          <div><dt>Tallas</dt><dd>{ts[0]}–{ts[-1]}</dd></div>
+        </dl>
+        <nav class="gen-chips" aria-label="Estilos">{chips}</nav>
+      </div>
+      <div class="gen-mosaic">{''.join(tiles)}</div>
+    </div>
+  </section>'''
+
 # ---------- Colecciones ----------
 PORTADA = {'mujer': ('d-maryury', 0), 'hombre': ('juance', 0), 'mujer-plataforma': ('d-bloom', 0), 'mujer-deportivos': ('d-nova', 0),
     'mujer-retro': ('d-quintero', 0), 'mujer-mocasines': ('d-anahi-taupe', 0), 'mujer-sandalias': ('d-comfy', 0),
@@ -280,7 +321,9 @@ for g in ('mujer', 'hombre'):
         pid, vi = PORTADA.get(key, (ps[0]['id'], 0))
         fp = next(p for p in PRODUCTS if p['id'] == pid)['variantes'][vi]['fotos'][0]
         items = [(GEN[g], f'../coleccion/{g}.html' if c else None)] + ([(cat_nombre(g, c), None)] if c else [])
+        hero = hero_genero(g, ps, ventas) if not c else None
         body = f'''<main>
+{hero or ''}''' + ('' if hero else f'''
   <section class="coll-hero">
     <div class="wrap coll-hero-in">
       <div class="coll-copy">
@@ -291,7 +334,7 @@ for g in ('mujer', 'hombre'):
       </div>
       <img class="coll-img" src="../{fp.replace('/dama/', '/dama-hd/')}" alt="{E(titulo)}">
     </div>
-  </section>
+  </section>''') + f'''
 {ESTILOS_T.replace('{txt}', ESTILOS_TXT[g]).replace('{cls}', ' moca-azul' if g == 'hombre' else '') if not c else ''}
   <section class="catalog" id="catalogo">
     <div class="wrap">

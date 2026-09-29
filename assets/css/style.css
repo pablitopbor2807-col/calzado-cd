@@ -396,6 +396,42 @@ a.tab { text-decoration: none; display: inline-flex; align-items: center; gap: 4
   .moca-stage { height: 100%; }
   .moca-card { width: min(30vw, 400px); margin: calc(min(30vw, 400px) * -0.625) 0 0 calc(min(30vw, 400px) * -0.5); }
 }
+/* Portada de las páginas Mujer y Hombre (mismo color que su sección de estilos) */
+.gen-hero { color: #F1E3CF; overflow: hidden;
+  background: radial-gradient(ellipse 60% 70% at 78% 40%, #7a5036 0%, rgba(122, 80, 54, 0) 70%), linear-gradient(160deg, #5A3A28, #3B2519 60%, #2a1a12); }
+.gen-hombre { color: #EFEBE6; background: radial-gradient(ellipse 60% 70% at 78% 40%, #2B4166 0%, rgba(43, 65, 102, 0) 70%), linear-gradient(160deg, #1C2A40, #0F1B2D 60%, #0A1320); }
+.gen-in { display: grid; grid-template-columns: minmax(0, 1fr); gap: 26px; padding-block: 26px 40px; }
+.crumbs.light, .crumbs.light a { color: rgba(241, 227, 207, .65); }
+.crumbs.light [aria-current] { color: #fff; }
+.gen-copy h1 { font-family: var(--head); font-weight: 700; text-transform: uppercase; font-size: clamp(72px, 17vw, 168px); line-height: .85; margin: 4px 0 14px; color: #fff; letter-spacing: .005em; }
+.gen-copy > p { margin: 0 0 20px; font-size: 15px; line-height: 1.6; max-width: 42ch; opacity: .85; }
+.gen-stats { display: flex; gap: 0; margin: 0 0 20px; border-top: 1px solid rgba(255, 255, 255, .16); border-bottom: 1px solid rgba(255, 255, 255, .16); }
+.gen-stats div { flex: 1; padding: 12px 0; }
+.gen-stats div + div { padding-left: 16px; border-left: 1px solid rgba(255, 255, 255, .16); }
+.gen-stats dt { font-size: 10px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; opacity: .6; }
+.gen-stats dd { margin: 2px 0 0; font-family: var(--head); font-size: 26px; color: var(--gold-2); font-variant-numeric: tabular-nums; }
+.gen-chips { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; margin-inline: -16px; padding-inline: 16px; }
+.gen-chips::-webkit-scrollbar { display: none; }
+.gen-chips a { flex: none; font-size: 12px; font-weight: 600; text-decoration: none; color: inherit; border: 1px solid rgba(255, 255, 255, .3); border-radius: 999px; padding: 8px 14px; transition: background .2s, color .2s; }
+.gen-chips a:hover { background: #fff; color: var(--ink); }
+.gen-mosaic { display: grid; grid-template-columns: 1.35fr 1fr; grid-template-rows: 1fr 1fr; gap: 10px; aspect-ratio: 5 / 4; }
+.gh-tile { position: relative; display: block; border-radius: 14px; overflow: hidden; background: rgba(0, 0, 0, .2); box-shadow: 0 18px 40px rgba(0, 0, 0, .35); }
+.gh-big { grid-row: span 2; }
+.gh-tile img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s; }
+.gh-tile:hover img { transform: scale(1.04); }
+.gh-tag { position: absolute; left: 10px; right: 10px; bottom: 10px; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; font-size: 12px; font-weight: 700; color: var(--gold-2); background: rgba(15, 12, 10, .62); backdrop-filter: blur(6px); border-radius: 9px; padding: 7px 10px; }
+.gen-hombre .gh-tag { background: rgba(8, 14, 25, .7); }
+.gh-tag b { font-family: var(--head); font-weight: 600; font-size: 15px; text-transform: uppercase; color: #fff; }
+.gen-hero + .moca { border-top: 1px solid rgba(255, 255, 255, .08); }
+@media (min-width: 720px) {
+  .gen-in { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); align-items: center; gap: 48px; padding-block: 44px 56px; }
+  .gen-copy h1 { font-size: clamp(80px, 8.2vw, 150px); }
+  .gen-copy > p { font-size: 16px; }
+  .gen-chips { flex-wrap: wrap; overflow: visible; margin-inline: 0; padding-inline: 0; }
+  .gh-tag { font-size: 13px; }
+  .gh-tag b { font-size: 18px; }
+}
+
 /* Versión azul oscuro (página de Hombre) */
 .moca-azul { --cafe: #0F1B2D; --cafe-2: #1C2A40; --crema: #EFEBE6;
   background: radial-gradient(ellipse 70% 60% at 68% 55%, #2B4166 0%, rgba(43, 65, 102, 0) 70%), linear-gradient(160deg, #1C2A40, #0F1B2D 60%, #0A1320); }
