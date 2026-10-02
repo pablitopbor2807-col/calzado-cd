@@ -2,15 +2,15 @@
    CALZADO C&D — catálogo de productos (hombre y mujer)
    ---------------------------------------------------------------------
    PRECIOS: PRECIO_MAYORISTA = precio por mayor de cada modelo (COP).
-     Hombre: catálogo "CABALLERO MAYOR".  Mujer: catálogo "DAMA MAYOR 21 SEPTIEMBRE 2026".
+     Hombre: "NUEVO Hombre CAT01-10".  Mujer: "NUEVO DAMA CAT 0110" (1 oct 2026; mismos precios por mayor que los anteriores).
    La página calcula sola:
-     precio de venta  = mayorista + 55%   (redondeado hacia arriba a $1.000)
+     precio de venta  = mayorista × 2 (100%) (redondeado hacia arriba a $1.000)
      precio "antes"   = precio de venta ÷ 0,80  → se muestra tachado con -20%
    Si un color cuesta distinto, usa la clave "modelo/color", ej: "calamar/rojo".
    Mientras un modelo esté en null se muestra "Precio a consultar".
    ===================================================================== */
 
-const CD_MARGEN = 0.55;   // 55% sobre el precio mayorista
+const CD_MARGEN = 1.00;   // 100% sobre el precio mayorista: el precio de venta es el doble
 const CD_REBAJA = 0.20;   // rebaja simulada del 20%
 
 const PRECIO_MAYORISTA = {
