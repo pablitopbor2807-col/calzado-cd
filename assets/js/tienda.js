@@ -2,7 +2,7 @@
    precios, tarjetas, bolsa de compras, guía de tallas y WhatsApp */
 
 // Número de WhatsApp de pedidos, con indicativo de Colombia (57) y sin "+".
-const CD_WHATSAPP = '573045309015';
+const CD_WHATSAPP = '573044063800';
 
 // Envío al cliente
 const CD_ENVIO = 20000;

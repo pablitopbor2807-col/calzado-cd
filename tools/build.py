@@ -111,7 +111,7 @@ def layout(*, root, path, title, desc, body, scripts, page=None, og_image='asset
       <div class="foot-brand">
         <img src="{root}assets/img/logo-light.png" alt="Calzado C&amp;D" class="footer-logo">
         <p>Tenis para ella y para él. Calidad y duración en cada par.</p>
-        <a class="btn btn-gold" data-wa target="_blank" rel="noopener" href="https://wa.me/573045309015">Pide por WhatsApp</a>
+        <a class="btn btn-gold" data-wa target="_blank" rel="noopener" href="https://wa.me/573044063800">Pide por WhatsApp</a>
       </div>
       <nav class="foot-col" aria-label="Comprar">
         <h4>Comprar</h4>
@@ -138,7 +138,8 @@ def layout(*, root, path, title, desc, body, scripts, page=None, og_image='asset
       </nav>
       <div class="foot-col">
         <h4>Contacto</h4>
-        <a href="https://wa.me/573045309015" target="_blank" rel="noopener">WhatsApp 304 530 9015</a>
+        <a href="https://wa.me/573044063800" target="_blank" rel="noopener">WhatsApp 304 406 3800</a>
+        <a href="https://www.instagram.com/calzadocalidadyduracion/" target="_blank" rel="noopener">Instagram @calzadocalidadyduracion</a>
         <span>Envíos a toda Colombia</span>
         <span>Entrega en 2 a 3 días</span>
       </div>
@@ -150,7 +151,7 @@ def layout(*, root, path, title, desc, body, scripts, page=None, og_image='asset
   </div>
 </footer>
 
-<a class="wa-float" data-wa target="_blank" rel="noopener" href="https://wa.me/573045309015" aria-label="Escríbenos por WhatsApp">{ICON_WA}</a>
+<a class="wa-float" data-wa target="_blank" rel="noopener" href="https://wa.me/573044063800" aria-label="Escríbenos por WhatsApp">{ICON_WA}</a>
 
 <div class="drawer" id="drawer" hidden>
   <div class="modal-backdrop" data-close-bag></div>
@@ -399,7 +400,7 @@ for p in PRODUCTS:
           <p class="m-hint" id="pHint"></p>
         </div>
         <button class="btn btn-dark btn-block" id="pAdd">Agregar a la bolsa</button>
-        <a class="btn btn-wa btn-block" id="pWa" target="_blank" rel="noopener" href="https://wa.me/573045309015">Pedir este par por WhatsApp</a>
+        <a class="btn btn-wa btn-block" id="pWa" target="_blank" rel="noopener" href="https://wa.me/573044063800">Pedir este par por WhatsApp</a>
         <button class="m-share" id="pShare" type="button">
           <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="m8.2 10.8 7.6-4.4M8.2 13.2l7.6 4.4"/></svg>
           Compartir este modelo
